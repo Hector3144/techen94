@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Autorización TikTok | TechEn94</title>
+  <style>body{margin:0;background:#080b10;color:#eef2f7;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;display:grid;min-height:100vh;place-items:center}.card{width:min(650px,calc(100% - 40px));background:#111720;border:1px solid #293341;border-radius:18px;padding:28px}code{display:block;overflow-wrap:anywhere;background:#080b10;border-radius:10px;padding:12px;color:#25f4ee}.muted{color:#aeb8c6}a{color:#25f4ee}</style>
+</head>
+<body><main class="card">
+<h1>Autorización de TikTok</h1>
+<p id="status" class="muted">Procesando la respuesta de TikTok…</p>
+<div id="result"></div>
+<p><a href="../../../">Volver a TechEn94</a></p>
+</main>
+<script>
+(function(){
+  const p = new URLSearchParams(location.search);
+  const code = p.get("code");
+  const error = p.get("error");
+  const desc = p.get("error_description");
+  const status = document.getElementById("status");
+  const result = document.getElementById("result");
+  if(error){
+    status.textContent = "TikTok devolvió un error de autorización.";
+    result.innerHTML = "<code>"+escapeHtml(error+(desc ? ": "+desc : ""))+"</code>";
+  } else if(code){
+    status.textContent = "TikTok devolvió un código de autorización.";
+    result.innerHTML = "<p>Este código es temporal. Úsalo únicamente en el proceso local de TechEn94 para completar OAuth. No lo publiques ni lo compartas.</p><code>"+escapeHtml(code)+"</code>";
+  } else {
+    status.textContent = "Página de retorno de OAuth de TechEn94.";
+    result.innerHTML = "<p class='muted'>Esta URL se utiliza como Redirect URI para la integración oficial con TikTok.</p>";
+  }
+  function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));}
+})();
+</script>
+</body></html>
